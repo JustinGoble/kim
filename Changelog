@@ -1,0 +1,110 @@
+--------
+v 0.1
+--------
+
+
+** Adjusted the display of coordinates by limiting decimal places to two and making them bold
+
+** If you have the reference marker active and click anywhere on the viewable area, the marker will move to the center of your viewable area
+
+** The Popup displaying coordinates was made bold to see it better
+
+** Crosshairs disabled for the test version
+
+** Towns should be scaled properly for max zoom, but other icons still need it
+
+** All location names were made bold for aesthetics
+
+
+
+--------
+v 0.2
+--------
+
+** Changed the cursor back to its default
+
+** Changed the reference marker icon to a crosshair icon for better aesthetics
+
+** Changed the Zone Names and Zone Bounds layers into separate Maps
+      There are now three options
+      Only one of the base maps may be selected at a time
+
+** Added another control button for on the new basemaps
+
+** Adjusted the Reference marker so it displays on top of all icons
+
+** Offset the the toolTips from their icons for better aesthetics
+
+** All icons scaled properly for max zoom
+
+** Improved the code for a slight performance gain
+
+---------
+v 0.3
+---------
+
+** Added the ability to add custom markers
+
+** Save custom markers to local storage
+
+** Retrieve custom markers from storage
+
+** Finished adding all vanilla icons to the map
+
+** Make all icon text centered above the icon
+
+---------
+v 0.4
+---------
+
+** Added ability to delete marker from map and storage
+
+** Added ability to rename marker on map and storage
+
+** Sidebar added to the map
+      ** Map Controls
+      ** Marker List (Incomplete)
+      ** Zone List (Incomplete)
+      ** Wiki Link
+      ** Gitlab Link
+      ** Credits Section
+      ** Settings (Incomplete)
+
+** Move Coords to Accommodate sidebar
+
+** Center icon text above icon
+
+---------
+v 0.5
+---------
+
+** Listed Custom Markers in siedebar
+      ** Update if deleted or renamed
+      ** Sort alphabetically
+
+** Added panning animation for zones
+
+** Added sidebar tab for unique recruits
+
+** Added sidebar tab for unique bounties
+
+** Added map icons for bounties and recruits
+
+** Added new popup for creating custom markers
+
+** Added toggle for visited status on ruins
+      ** Save
+      ** Load
+
+** Added copying to clipboard on reference marker left click
+
+** Disabled zoom animation while mouse is in sidebar
+      ** Able to scroll in sidebar
+
+** Added coordinate input on right click to reference marker
+
+** Added Recruit and Bounty data
+
+** Added sidebar content for recruits and bounties
+
+** Reference Marker now follows the panning animation for sidebar content

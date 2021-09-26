@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136765643-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136765643-1');
+</script>
+
+
+  <meta charset="UTF-8">
+  <title>Kenshi Interactive Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/leaflet.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/leaflet-sidebar.min.css" />
+  <link rel="stylesheet" href="assets/css/index.css" type="text/css">
+
+</head>
+
+<body>
+
+  <div id="kenshi" class="sidebar-map">
+
+    <div id="selectMarkerContainer" class="hidden">
+        <h3 class="centered">CHOOSE YOUR ICON</h3>
+        <hr>
+        <img title= "Bounty" id="customBounty" class="border-img image" src="assets/images/mapIcons/smallwhitebounty.png" alt="Bounty" height="50" width="50">
+        <img title= "Village" id="customVillage" class="border-img image" src="assets/images/mapIcons/village.png" alt="Bounty" height="50" width="50">
+        <img title= "Town" id="customTown" class="border-img" src="assets/images/mapIcons/town.png" alt="Bounty" height="50" width="50">
+        <img title= "Outpost" id="customOutpost" class="border-img image" src="assets/images/mapIcons/smalloutpost.png" alt="Bounty" height="50" width="50"></br>
+        <img title= "Slave Camp" id="customSlaveCamp" class="border-img image" src="assets/images/mapIcons/selectionslavecamp.png" alt="Bounty" height="50" width="50">
+        <img title= "Ruin" id="customRuin" class="border-img image" src="assets/images/mapIcons/centeredruin.png" alt="Bounty" height="50" width="50">
+        <img title= "POI" id="customPoi" class="border-img image" src="assets/images/mapIcons/selectionpoi.png" alt="Bounty" height="50" width="50">
+        <img title= "Territory Flag" id="customFlag" class="border-img image" src="assets/images/mapIcons/playericons/playersmallflag.png" alt="Bounty" height="50" width="50">
+    </div>
+
+    <div id="choiceContainer" class="hidden">
+      <button id="renameBtn" name="button">Rename</button>
+      <button id="deleteBtn" name="button">Delete</button>
+    </div>
+
+    <div id="renameContainer" class="hidden">
+      <input type="text" id="newName" class="rounded" name="newName" required minlength="1" maxlength="100" placeholder="Name Your Marker"/>
+      <button id="saveBtn" name="button">Save</button>
+    </div>
+
+    <div id="zoomContainer" class="hidden">
+      <input type="text" id="coordsInput" name="coords" required minlength="1" maxlength="20" placeholder="Enter Coords" />
+      <button title="Zoom to Coords" id="zoomBtn" class="search-button" name="zoomBtn">Go</button>
+    </div>
+
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs sidebar-centered">
+            <ul role="tablist">
+                <li title="Controls"><a href="#home" role="tab"><i class="fa fa-gamepad" style="color:#FFF"></i></a></li>
+                <li title="Custom Markers"><a href="#custommarkers" role="tab"><i class="fa fa-flag" style="color:#FFF"></i></a></li>
+                <li title="Kenshi Zones"><a href="#kenshi-zones" role="tab"><i class="fa fa-map-signs" style="color:#FFF"></i></a></li>
+                <li title="Unique Recruits"><a href="#kenshi-recruits" role="tab"><img src="assets/images/mapIcons/recruitsidebar-darktheme.png"></a></li>
+                <li title="Unique Bounties "><a href="#kenshi-bounties" role="tab"><img src="assets/images/mapIcons/sidebarbounty-darktheme.png"></a></li>
+                <li title="Town List "><a href="#kenshi-towns" role="tab"><img src="assets/images/mapIcons/sidebartown.png"></a></li>
+                <li title="Notes"><a href="#notes" role="tab"><img src="assets/images/mapIcons/sticky-sidebar.png"></a></li>
+            </ul>
+
+            <ul role="tablist">
+              <li title="Kenshi Wiki"><a href="https://kenshi.wikia.com/wiki/Kenshi_Wiki" role="tab" target="_blank"><i class="fa fa-wikipedia-w" style="color:#FFF"></i></a></li>
+              <li title=" Project Credits"><a href="#credits" role="tab"><i class="fa fa-gavel" style="color:#FFF"></i></a></li>
+              <li title="Contact/Send Feedback"><a href="https://forms.gle/96nEnF6R7RMCZkdv8" role="tab" target="_blank"><img src="assets/images/mapIcons/contacticonsmall.png"></a></li>
+          </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Map Controls
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <div class="bordered-bottom margin-top pbackground">
+                  <h2 class="options-header">Left Click on Map</h2>
+                  <p>Brings Reference Marker to the center of the map</p>
+                </div>
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Left Click + Drag on Map</h2>
+                 <p>Move the map around your viewport</p>
+                </div>
+
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Right Click on Map</h2>
+                  <p>Create custom marker at the cursor location</p>
+                </div>
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Left Click + Drag on Reference Marker</h2>
+                  <p>Move the reference marker around your screen. Once you stop dragging, the coordinates will display</p>
+                </div>
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Left Click on Reference Marker</h2>
+                  <p>Copy the current coordinates at your cursor to your clipboard</p>
+                </div>
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Right click on Reference Marker</h2>
+                  <p>Opens the Coordinate input. Enter coords copied and click go to pan to coordinates.</p>
+                </div>
+
+                <div class="bordered-bottom pbackground">
+                  <h2 class="options-header">Left Click on Custom Marker</h2>
+                  <p>Brings up choice to rename or delete</p>
+                </div>
+                <div class="pbackground">
+                  <h2 class="options-header">Left Click on Ruin</h2>
+                  <p>Toggle visited status for ruins, saves to your browser</p>
+                </div>
+
+            </div>
+
+            <div class="sidebar-pane" id="custommarkers">
+                <h1 class="sidebar-header">
+                    Custom Markers
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <ul class="sidebar-list" id="custom-list">
+
+                </ul>
+            </div>
+
+            <div class="sidebar-pane" id="kenshi-zones">
+              <h1 class="sidebar-header">
+                 Kenshi Zones
+                  <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+              </h1>
+              <ul class="sidebar-list" id="zone-list">
+
+              </ul>
+            </div>
+
+            <div class="sidebar-pane" id="kenshi-recruits">
+              <h1 class="sidebar-header">
+                 Unique Recruits
+                  <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+              </h1>
+              <ul class="sidebar-list" id="recruits-list">
+
+              </ul>
+            </div>
+
+            <div class="sidebar-pane" id="kenshi-bounties">
+              <h1 class="sidebar-header">
+                 Unique Bounties
+                  <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+              </h1>
+              <ul class="sidebar-list" id="bounties-list">
+
+              </ul>
+            </div>
+
+
+            <div class="sidebar-pane" id="kenshi-towns">
+              <h1 class="sidebar-header">
+                 Town List
+                  <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+              </h1>
+              <ul class="sidebar-list" id="towns-list">
+
+              </ul>
+            </div>
+
+            <div class="sidebar-pane" id="notes">
+              <h1 class="sidebar-header">
+                  Notes
+                  <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+              </h1>
+              <input type="text" id="newNote" class="rounded centered" name="newNote" required minlength="1" maxlength="200" placeholder="Write Your Note and Press Enter"/>
+              <ul class="sidebar-list" id="notes-list">
+
+              </ul>
+          </div>
+
+            <div class="sidebar-pane" id="credits" class="credits-section">
+                <h1 class="sidebar-header">
+                    Project Credits
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                <h2>Development Team</h2>
+                <hr class="credits-section">
+                <div class="credits-group">
+                  <h3>Baleg Qhan - Lead Developer</h3>
+                  <h3>Lord Lurk - Data Architect</h3>
+                  <h3>Shidan - Graphics Artist</h3>
+                  <h3>Ohems - My Mentor</h3>
+                </div>
+
+                <h2>Quality Assurance</h2>
+                <hr class="credits-section">
+                <div class="credits-group">
+                  <h3>SuurSaadik - QA Tester </h3>
+                  <h3>Maniac Maluco - QA Tester </h3>
+                  <h3>TreadLightly - QA Tester </h3>
+                </div>
+
+                <h2>Library and Plugin Appreciation</h2>
+                <hr class="credits-section">
+                <div class="credits-group">
+                  <h3>The Leaflet.js Team</h3>
+                  <h3>Turbo87 - Sidebar-v2 Plugin</h3>
+                  <h3>ardhi - Mouse Position Plugin</h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <footer id="footer"> The Kenshi Interactive Map is powered by the Leaflet.js library. The KIM team is unaffiliated with Lo-Fi Games.</footer>
+
+    <script src="assets/js/library/leaflet.js"></script>
+    <script src="assets/js/plugins/L.Control.MousePosition.js"></script>
+    <script src="assets/js/plugins/leaflet-sidebar.min.js"></script>
+    <script src="assets/js/plugins/leaflet.restoreview.js"></script>
+    <script src="assets/js/utilities/utilities.js"></script>
+    <script src="assets/js/data/bountydata.js"></script>
+    <script src="assets/js/data/recruitdata.js"></script>
+    <script src="assets/js/data/towndata.js"></script>
+    <script src="assets/js/data/outpostdata.js"></script>
+    <script src="assets/js/data/ruindata.js"></script>
+    <script src="assets/js/data/zonedata.js"></script>
+    <script src="assets/js/data/poidata.js"></script>
+    <script src="assets/js/data/villagedata.js"></script>
+    <script src="assets/js/data/slavecampdata.js"></script>
+    <script src="assets/js/main/init.js"></script>
+    <script src="assets/js/main/layergroups.js"></script>
+    <script src="assets/js/main/refmarker.js"></script>
+    <script src="assets/js/main/sidebar.js"></script>
+    <script src="assets/js/main/customs.js"></script>
+    <script src="assets/js/main/end.js"></script>
+  </body>
+
+</html>
